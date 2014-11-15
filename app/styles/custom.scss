@@ -1,0 +1,104 @@
+$hot: red;
+$cold: blue;
+
+div.menu {
+  overflow: auto;
+
+  div {
+
+    .nav {
+      margin: 0;
+
+      tab-heading {
+        //make sure all contents distributed inside
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        margin: 0 -4px; //to compensate margin on children
+        div {
+          margin: 0 4px; //(half of) minimum distance between boxes
+          white-space: nowrap;
+          &.title {
+            flex-shrink: 0;
+            font-weight: bold;
+          }
+          &.data {
+            flex-shrink: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .tab-content {
+      margin: 10%;
+      label {
+        display:block;//vertical
+      }
+      select, input[type=text] {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.optiongroup {
+  display: flex;
+  input {flex-shrink: 0;}
+  label {padding-left: 6px;}
+}
+
+hc-simple-graph, .simple-graph { //TODO: remove one of them
+  width: 100%;
+  display: block;
+  float: left;
+
+  height: 16px;
+  &:hover {height: 150px} //TODO: remove one of them
+  //&.hover {height: 150px; background-color: yellow;}
+
+
+  .axis {
+    path {
+      fill: none;
+      stroke: grey;
+      shape-rendering: crispEdges;
+    }
+    .tick {
+      line {
+        fill: none;
+        stroke: lightgrey;
+        stroke-opacity: 0.9;
+        shape-rendering: crispEdges;
+      }
+      text {
+        font-size: 14px;
+      }
+    }
+
+  }
+  .axis.label text {
+    font-size: 14px;
+    text-anchor: end;
+  }
+  path {
+    fill: none;
+    &#tempLine {
+      stroke-width: 1px;
+      stroke: rgb(89, 185, 95);
+    }
+    &#diffLine {
+      stroke-width: 7px;
+      stroke-opacity: .6;
+      &.hot {stroke: $hot;}
+      &.cold {stroke: $cold;}
+    }
+  }
+  circle.recordCircle {
+    fill-opacity: .33;
+    &.hot {fill: $hot; stroke: $hot;}
+    &.cold {fill: $cold; stroke: $cold;}
+  }
+}

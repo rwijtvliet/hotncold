@@ -1,0 +1,68 @@
+<div class='container'>
+  <div class='col-md-5 menu'>
+    <tabset vertical="true" type="pills">
+      <tab>
+        <tab-heading>
+          <div class="title">Location</div>
+          <div class="data">{{settings.location.name}}</div>
+        </tab-heading>
+        <fieldset>
+          <legend>Select location</legend>
+          <select size="4" ng-model="settings.location" ng-options="d.name for d in options.locations" ng-change="change.location()"></select>
+          <p>Data source for this location: <a href="{{settings.location.sourceUrl}}">{{settings.location.source}}</a>.</p>
+        </fieldset>
+      </tab>
+      <tab>
+        <tab-heading>
+          <div class="title">Curves</div>
+          <div class="data">{{settings.curveCount.name}}</div>
+        </tab-heading>
+        <fieldset>
+          <legend>Number of curves</legend>
+          <div class="optiongroup" ng-repeat="curveCount in options.curveCounts">
+            <input type="radio" ng-model="settings.curveCount" id="curveCount_{{curveCount.id}}" ng-value="curveCount" ng-change="change.curveCount()"/>
+            <label for="curveCount_{{curveCount.id}}">{{curveCount.descr}}</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend> </legend>
+          <div class="optiongroup">
+            <input type="checkbox" id="allInOne" ng-model="settings.allInOne" ng-change="change.allInOne()"/>
+            <label for="allInOne">Put all curves in one graph</label>
+          </div>
+        </fieldset>
+      </tab>
+      <tab>
+        <tab-heading>
+          <div class="title">Detail</div>
+          <div class="data">{{settings.detail.name}}</div>
+        </tab-heading>
+        <fieldset>
+          <legend>Level of detail</legend>
+          <div class="optiongroup" ng-repeat="detail in options.details">
+            <input type="radio" ng-model="settings.detail" id="detail_{{detail.id}}" ng-value="detail"/><!--TODO REMOVE-->
+            <label for="detail_{{detail.id}}">{{detail.descr}}</label>
+          </div>
+        </fieldset>
+      </tab>
+    </tabset>
+  </div>
+  <div class="col-md-7">
+    <hc-simple-graph hc-rst="settings.curves"
+                     hc-title="'test'"
+                     hc-high-detail="false"
+                     hc-hover="hover" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+    </hc-simple-graph>
+    <hc-simple-graph ng-repeat="curve in settings.curves"
+                     hc-rst="curve.rst"
+                     hc-title="title(curve.month, curve.day)"
+                     hc-high-detail="settings.detail.id"
+                     hc-hover="hover" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+    </hc-simple-graph>
+    <!--hc-simple-graph ng-repeat="curve in settings.curves"
+                     hc-rst="curve.rst"
+                     hc-title="title(curve.month, curve.day)"
+                     hc-high-detail="settings.detail.id">
+    </hc-simple-graph-->
+  </div>
+</div>
